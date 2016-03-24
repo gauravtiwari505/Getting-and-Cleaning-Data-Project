@@ -8,10 +8,12 @@
 
 #Step 1 : Getting the data from the archive and unzipping it
 
-##Setting the working directory
+##Setting the working directory and clearing the workspace
 setwd("~/Documents/Coursera_Data_Science/Getting-and-Cleaning-Data-Project")
+rm(list=ls())
 datafolder="UCI HAR Dataset"
 outputfolder = "Output"
+
 
 
 ##Downloading the Data
@@ -54,8 +56,37 @@ if(!file.exists("output"))
 
 ##Read the features.txt file to get the column mapping for the data(training and testing data)
 features=read.table(paste(datafolder,"features.txt",sep = "/"),sep="",stringsAsFactors = FALSE)
+print("Features.txt read succesfully")
+##Read the training data set and its labels
+###Subject Data
+subject_train = read.table(paste(datafolder,"train","subject_train.txt",sep = "/"),sep="",stringsAsFactors = FALSE)
+print("subject_train read succesfully")
+###Data
+x_train = read.table(paste(datafolder,"train","X_train.txt",sep = "/"),sep="",stringsAsFactors = FALSE)
+print("X_train read succesfully")
+###Labels
+y_train = read.table(paste(datafolder,"train","Y_train.txt",sep = "/"),sep="",stringsAsFactors = FALSE)
+print("Y_train read succesfully")
+##Read the test data set and its labels
+###Subject Data
+subject_test=read.table(paste(datafolder,"test","subject_test.txt",sep = "/"),sep="",stringsAsFactors = FALSE)
+print("subject_test read succesfully")
 
+###Data
+x_test = read.table(paste(datafolder,"test","X_test.txt",sep = "/"),sep="",stringsAsFactors = FALSE)
+print("X_test read succesfully")
+###Labels
+y_test = read.table(paste(datafolder,"test","Y_test.txt",sep = "/"),sep="",stringsAsFactors = FALSE)
+print("Y_test read succesfully")
 
+#Step 5 Binding the data together with the labels and features
+train= cbind(subject_train,y_train,x_train)
+test= cbind(subject_test,y_test,x_test)
+print("Testing and Training Data Binded")
 
-
+#Step 6 Saving the final testing and training data in the output folder in csv formats
+print("Writing Output/Train.csv")
+write.csv(train,paste(outputfolder,"Train.csv",sep = "/"))
+print("Writing Output/Test.csv")
+write.csv(test,paste(outputfolder,"Test.csv",sep = "/"))
 
