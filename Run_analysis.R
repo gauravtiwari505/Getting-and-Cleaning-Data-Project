@@ -10,6 +10,9 @@
 
 ##Setting the working directory
 setwd("~/Documents/Coursera_Data_Science/Getting-and-Cleaning-Data-Project")
+datafolder="UCI HAR Dataset"
+outputfolder = "Output"
+
 
 ##Downloading the Data
 url="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
@@ -24,4 +27,35 @@ if(!file.exists("UCI.zip"))
         print("File Already Downloaded")
 }
 #Step 2 Unzipping the file into the folder 
+
+if(!file.exists("UCI HAR Dataset"))
+{
+        print("Unzipping the file")
+        unzip("UCI.zip",list=FALSE,overwrite = TRUE)
+        print("File Unzipped")
+} else
+{
+        print("File already unzipped in the folder UCI HAR Dataset")
+}
+
+#Step 3 Create an output folder for putting the processed data
+print("Checking for Output Folder")
+if(!file.exists("output"))
+{
+        dir.create("Output")
+        print("Output folder Created")
+}else
+{
+        print("Output Folder Exists")
+}
+
+
+#Step 4 Read the files and convert into a data frame for better performance and handling
+
+##Read the features.txt file to get the column mapping for the data(training and testing data)
+features=read.table(paste(datafolder,"features.txt",sep = "/"),sep="",stringsAsFactors = FALSE)
+
+
+
+
 
